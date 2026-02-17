@@ -5,6 +5,11 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <div id="root"></div>
 <script type="text/babel">
+  const cardList = [
+    <li className="list-group-item">An item</li>,
+    <li className="list-group-item">A second item</li>,
+    <li className="list-group-item">A third item</li>,
+  ]
 function App() {
   const data = {
     imageUrl: 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80',
@@ -30,7 +35,7 @@ function App() {
     {/* 2. 陣列中的值會直接呈現在畫面上 */}
 
     <ul className="list-group list-group-flush">
-
+      {cardList}
     </ul>
   </div>
 }
