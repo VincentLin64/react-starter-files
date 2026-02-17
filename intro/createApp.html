@@ -4,6 +4,29 @@
 <!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">環境安裝</h1><small>檔名：<code>createApp.html</code></small></div>
 <!-- 🔥🔥練習開始🔥🔥 -->
 <!-- 五步驟，載入 React -->
+<!--  步驟一：載入React、ReactDOM、Babel-->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<!--  步驟三：加入root元素-->
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // 步驟二：檢查資源有正確載入
+    console.log(React, ReactDOM);
+
+    // 步驟四：建立 React 元件
+    function App() {
+      return <h1>Hello, React!</h1>
+    }
+
+    // 步驟五：渲染 React 元件
+    const rootElement = document.getElementById("root");
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<App />);
+
+  </script>
 <!-- https://reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
 <!-- https://reactjs.org/docs/add-react-to-a-website.html#quickly-try-jsx -->
 
