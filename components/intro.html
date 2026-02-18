@@ -10,6 +10,23 @@
     return (
       <>
         React
+        <Header imgUrl="https://images.unsplash.com/photo-1771272338329-1ab5145559a5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></Header>
+        <div className="row">
+          <div className="col-4">
+            <Sidebar list={['小明', '杰倫', '小傑']}></Sidebar>
+          </div>
+          <div className="col-8">
+            <ChartJs
+              data={[
+                { label: '小明', value: 1000 },
+                   { label: '杰倫', value: 10000 },
+                   { label: '漂亮阿姨', value: 3000 },
+                   { label: '卡斯伯', value: 2500 },
+              ]}
+            ></ChartJs>
+          </div>
+        </div>
+        <Footer>這是一個Footer</Footer>
       </>
     );
   };
