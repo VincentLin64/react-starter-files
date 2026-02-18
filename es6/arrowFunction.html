@@ -6,11 +6,27 @@
 <div id="root"></div>
 <script type="text/babel">
 // #1 箭頭函式改寫
-function fn(a, b) {
-  return a * b;
-}
-console.log(fn(2, 4));
+// function fn(a, b) {
+//   return a * b;
+// }
 
+// const fn = (a, b) => a * b;
+// console.log(fn(2, 4));
+
+// 當參數只有一個時候，可以把括號移除掉
+// const fn = n  => n;
+// console.log(fn(5));
+
+// const person = {
+//   name: '小明'
+// }
+
+// 當回傳為一個物件的時候，請補上小括號
+// const fn = () => ({
+//   name: '小明'
+// });
+//
+// console.log(fn());
 
 // #2 箭頭函式的 this 變化（React Hook 寫法不太會踩到這個雷）
 // var name = '全域'
@@ -19,9 +35,14 @@ console.log(fn(2, 4));
 //   callName: function () {
 //     console.log('1', this.name); // 1 小明
 //     setTimeout(function () {
-//       console.log('2', this.name); // 2
+//       console.log('2', this.name); // 2 全域
 //       console.log('3', this); // 3
 //     }, 10);
+//
+//     setTimeout(() => {
+//       // 小明
+//       console.log('2', this.name);
+//     })
 //   },
 // }
 // person.callName();
@@ -29,12 +50,12 @@ console.log(fn(2, 4));
 
 
 // #3 箭頭函式在 React 的運用
-function Card() {
+const Card = () => {
   return <div className="card">
     <div className="card-body">這是一張卡片</div>
   </div>
 }
-function App() {
+const App = () => {
   return (
     <div>
       <Card></Card>
