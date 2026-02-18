@@ -10,13 +10,28 @@
 //   name: '小明',
 //   obj: {}
 // }
-
+//
+// const person2 = person;
+// person2.name = '小華';
+// console.log(person.name); // 小華
+// console.log(person.name === person2.name) // true
+//
+// const { obj } = person;
+// obj.name = 'person 下的物件';
+// console.log(person.obj.name) // person 下的物件
 
 // #2 陷阱
 // const fn = (item) => {
 //   item.name = '杰倫';
 //   // ...
 // }
+//
+// const person = {
+//   name: '小明',
+//   obj: {}
+// }
+// fn(person);
+// console.log(person.name); // 杰倫
 
 
 // 關於：這樣的錯誤，ESLint 也有建議不要這麼做（但你是有經驗的開發者時，下方也有提供關閉的方式）
@@ -28,18 +43,30 @@
 //   name: '小明',
 //   obj: {}
 // }
-
+// 1
+// const person2 = {...person};
+// 2
+// const person2 = Object.assign({}, person);
+// person2.name = '杰倫';
+// person2.obj.name = 'person2 的值';
+// console.log(person, person2)
 
 // #3-2 深層拷貝
-// const person = {
-//   name: '小明',
-//   obj: {}
-// }
+const person = {
+  name: '小明',
+  obj: {}
+}
 
-const Card = ({ person }) => {
+const person2 = JSON.parse(JSON.stringify(person));
+person2.name = '杰倫';
+person2.obj.name = 'person2 的值';
+console.log(person, person2);
+
+const Card = ({ person, changePersonName }) => {
   return <div className="card">
     <div className="card-body">
       {person.name}
+      <input type="text" className="form-control" onChange={changePersonName} value={person.name} />
     </div>
   </div>
 }
@@ -57,7 +84,7 @@ const App = () => {
 
   return <div>
     <input type="text" className="form-control" onChange={changePersonName} value={person.name} />
-    <Card person={person}></Card>
+    <Card person={person} changePersonName={changePersonName}></Card>
   </div>
 }
 
