@@ -8,8 +8,12 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 
+
+
 // #4 React 與 DOM 的渲染關係(set 觸發時，會觸發整個函式)
+let num = 0;
 const App = () => {
+  console.log('函式更新', num++);
   const [arr, setArr] = useState([1, 2, 3]);
 
   function removeArrData() {
@@ -22,12 +26,20 @@ const App = () => {
   }
 
   // #5-1 如果有非同步、週期式事件可能會重複性觸發
-
+  // setInterval(() => {
+  //   console.log('setInterval');
+  // }, 1000);
 
 
   // #5-2 請確保 setState 是放在元件最外層
+  // ❌ 會出錯
+  // if (arr.length < 5) {
+  //   var [text, setText] = useState('123')
+  // }
 
   return (<div>
+    {console.log('畫面渲染')}
+    {/*text*/}
     <ul>
       {arr.map((i) => <li key={i}>{i}</li>)}
     </ul>
