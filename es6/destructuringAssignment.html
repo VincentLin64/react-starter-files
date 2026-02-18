@@ -11,10 +11,14 @@ const person = {
   age: 16,
   like: '鍋燒意麵'
 }
+// const { name, age } = person;
+// console.log(name, age);
 
 // #2 陣列解構
 const array = ['小明', '杰倫', '漂亮阿姨'];
 
+// const [Ming, Jay, Auntie] = array;
+// console.log(Ming, Jay, Auntie);
 
 // #3 解構加展開
 const people = {
@@ -35,20 +39,30 @@ const people = {
   }
 }
 
-// #4 解構加上重新命名
+// const { Ming, ...others } = people;
+// console.log(Ming, others);
+//
+// const {age, like} = Ming;
+// console.log(age, like);
 
+// #4 解構加上重新命名
+// let Ming = {};
+// const { Ming: 小明 } = people;
+// console.log(小明);
 
 // #5 函式參數解構
-
-
+// function callName( { name, age } ) {
+//   console.log(name, age);
+// }
+// callName(person)
 
 // #6 解構在 React 的運用
 const { useState } = React;
 
-function Card() {
+function Card({ person }) {
   return (<div className="card">
     <div className="card-body">
-
+      {person.name}
     </div>
   </div>)
 }
