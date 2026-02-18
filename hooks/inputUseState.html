@@ -5,11 +5,13 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <div id="root"></div>
 <script type="text/babel">
+  const { useState } = React;
 const App = () => {
-  const text = useState('這是一段文字')
+  const [text, setText] = useState('這是一段文字')
 
   return (<div>
-    <input type="text" />
+    {text}
+    <input type="text" value={text} onChange={e => setText(e.target.value)}/>
   </div>)
 }
 
