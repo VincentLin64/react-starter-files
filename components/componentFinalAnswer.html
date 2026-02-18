@@ -17,10 +17,67 @@
     const options = { hour: 'numeric', minute: 'numeric' }
     console.log(location);
 
+    const Time = ({ startTime, endTime }) => {
+      return (<div className="text-center">
+        <div className="h4">{new Date(startTime).toLocaleDateString(undefined, { day: 'numeric'})}</div>
+        {new Date(startTime).toLocaleString(undefined, options)} <br />
+          ~ <br />
+        {new Date(endTime).toLocaleString(undefined, options)}
+      </div>)
+    }
+
+    const Card = ({ title, wx, pop }) => {
+      return (
+        <div className='card text-center'>
+          <div className='card-header'>
+            <h4 className='my-0'>{title}</h4>
+          </div>
+          <div className='card-body'>
+            <div className="row row-cols-3">
+              {wx.time.map((time, key) => (
+                <div className="col" key={key}>
+                  <Time startTime={time.startTime} endTime={time.endTime}></Time>
+                  <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName} className="img-fluid mt-3"/>
+                  <div className="mt-2">{time.parameter.parameterName}</div>
+                  <div className="mt-3">
+                    <i className="bi bi-umbrella-fill"></i> {pop.time[key].parameter.parameterName}%
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const Weather = ({children}) => {
+      return (<>
+        {children}
+        <div className='row row-cols-2 g-4'>
+          {location.map((city) => {
+            return (
+              <div className='col' key={city.locationName}>
+                {/* city.weatherElement[0] 天氣概況 */}
+                {/* city.weatherElement[1] 最高氣溫 */}
+                {/* Pop city.weatherElement[4] 降雨率 */}
+                <Card
+                  title={city.locationName}
+                  wx={city.weatherElement[0]}
+                  pop={city.weatherElement[4]}
+                ></Card>
+              </div>
+            );
+          })}
+        </div>
+      </>)
+    }
+
     const App = () => {
       return (
         <>
+          <Weather>
             <h2 className="my-3">三十六小時天氣預報</h2>
+          </Weather>
         </>
       );
     };
