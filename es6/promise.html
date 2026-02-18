@@ -61,14 +61,14 @@ const promiseSetTimeout = (status) => {
 //   })
 
 // #2-3 失敗捕捉
-console.log(1);
-promiseSetTimeout(false)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// console.log(1);
+// promiseSetTimeout(false)
+//   .then((response) => {
+//     console.log(response);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 // #3 實戰取得遠端資料
 // #3-1
@@ -76,6 +76,27 @@ promiseSetTimeout(false)
 
 // #3-2 記得捕捉錯誤，Axios 錯誤捕捉技巧
 // https://randomuser.me/
+// https://randomuser.me/api/
+axios.get('https://randomuser.me/api/')
+  .then((response) => {
+    console.log(response.data.results[0]);
+    return axios.get('https://randomuser.me/api/');
+  })
+  .then((response) => {
+    console.log(response.data.results[0]);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// 3-2 記得捕捉錯誤,
+// axios.get('https://randomuser.me/ap/')
+//   .then((response) => {
+//     console.log(response.data.results[0]);
+//   })
+//   .catch((error) => {
+//     console.log(error.message);
+//   })
 
 </script>
 <!-- 🙇🙇練習結束🙇🙇 -->
