@@ -32,18 +32,59 @@ const people = [
 // https://www.youtube.com/watch?v=_vFuDQ_6Xt8
 
 // #2. 操作所有陣列內的值（同一個陣列）
-
+// item 物件本身
+// index 索引值
+// array 整個陣列
+// people.forEach((item, index, array) => {
+//   item.newPrice = item.price * 0.8;
+// });
+// console.log(people);
 
 // #3. 重新建立新的陣列
+// const order = people.map((item, i) => {
+//   return {
+//     name: item.name,
+//     like: item.like,
+//     price: item.price * 0.8
+//   }
+// });
 
+// const order = people.map((item, i) => ({
+//     name: item.name,
+//     like: item.like,
+//     price: item.price * 0.8
+// }));
+// console.log(order, people);
 
 // #4 map 使用注意事項
-
 // 當直接回傳時，會出現 undefined 的內容
-
+// const order = people.map((item, i) => {
+//   return {
+//     name: item.name,
+//     like: item.like,
+//     price: item.price * 0.8
+//   }
+// });
 
 // 解法
+// const filterOrders = people.filter((item) => item.price > 50);
+//
+// const order = filterOrders.map((item, i) => ({
+//   name: item.name,
+//   like: item.like,
+//   price: item.price * 0.8
+// }))
+// console.log(filterOrders,order);
 
+// 縮寫
+const order = people
+  .filter(item => item.price > 50)
+  .map(item => ({
+    name: item.name,
+    like: item.like,
+    price: item.price * 0.8
+  }));
+console.log(order);
 
 // #5 map 在 React 中的運用
 const App = ()=> {
@@ -71,7 +112,11 @@ const App = ()=> {
   ];
   return <div>
     <ul>
-
+      {
+        people.map((item, i) => {
+          return <li key={i}>{item.name} 喜歡 {item.like}，價格 {item.price}</li>
+        })
+      }
     </ul>
   </div>
 }
