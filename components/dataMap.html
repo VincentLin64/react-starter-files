@@ -19,13 +19,40 @@ const Card = ({title, price, content, callToAction}) => {
 }
 
 const App = () => {
+
+  const products = [
+    {
+      id: 1,
+      title: '基本版',
+      price: 1000,
+      content: '基本每週配給，包含高麗菜、空心菜，健康不馬乎',
+      callToAction: '免費試用',
+    },
+    {
+      id: 2,
+      title: '進階版',
+      price: 6000,
+      content: '奶蛋魚肉經營養師精確估計，適合三人小家庭使用，每週一、四配送', callToAction: '永保健康'
+    },
+    {
+      id: 3,
+      title: '企業版',
+      price: '請洽客服',
+      content: '多少人數均可訂製，5 ~ 1000 人團體均適用',
+      callToAction: '大吃大喝方案'
+    },
+  ]
+
   return (
     <>
       <h2>月月送菜到你家</h2>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore molestiae facere asperiores sit aspernatur laboriosam ipsum, excepturi fuga, consequuntur cupiditate, nam a doloremque error adipisci nulla reiciendis itaque odio voluptatibus.</p>
-      <Card title="基本版" price={1000} content="基本每週配給，包含高麗菜、空心菜，健康不馬乎" callToAction="免費試用"></Card>
-      <Card title="進階版" price={6000} content="奶蛋魚肉經營養師精確估計，適合三人小家庭使用，每週一、四配送" callToAction="永保健康"></Card>
-      <Card title="企業版" price="請洽客服" content="多少人數均可訂製，5 ~ 1000 人團體均適用" callToAction="大吃大喝方案"></Card>
+      {
+        products.map((product) => {
+          return <Card key={product.id} title={product.title} price={product.price} content={product.content} callToAction={product.callToAction} ></Card>
+        })
+      }
+      {/* products.map((product) => <Card {...product} key={product.id} />)*/}
     </>
   )
 }
