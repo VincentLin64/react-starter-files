@@ -17,6 +17,50 @@
     const options = { hour: 'numeric', minute: 'numeric' }
     console.log(location);
 
+    // 1. 元件的可利用性 Card
+    // 2. 當特定區塊的邏輯比較複雜時 Time
+
+    const Time = ({startTime, endTime}) => {
+      return <>
+          <div className="h4 my-2">
+            {new Date(startTime).toLocaleDateString(undefined, {day: 'numeric'})}
+          </div>
+          {new Date(startTime).toLocaleString(undefined, options)} <br/>
+          ~ <br/>
+          {new Date(endTime).toLocaleString(undefined, options)}
+
+        </>
+    }
+
+    const Card = ({title, wx, pop}) => {
+      return <div className="card text-center">
+        <div className="card-header">
+          <div className="h4 my-0">{title}</div>
+        </div>
+        <div className="card-body">
+          <div className="row row-cols-3">
+            {
+              wx.time.map((time, index) => (
+                <div className="col" key={index}>
+                  <Time startTime={time.startTime} endTime={time.endTime} key={index} />
+                  <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName} />
+                  <div className="mt-2">{time.parameter.parameterName}</div>
+                  <div className="mt-2">
+                    <i className="bi bi-umbrella-fill"></i>
+                    {pop.time[index].parameter.parameterName}%
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    // location > WeatherElement(Array)
+    // Wx 天氣概況 > time(Array)
+    // MaxT 最高氣溫
+    // PoP 降雨機率
     const App = () => {
       return (
         <>
@@ -25,33 +69,14 @@
             {
               location.map(( city ) => {
                 return <div className="col" key={city.locationName}>
-                  <div className="card text-center">
-                    <div className="card-header">
-                      <div className="h4 my-0">{city.locationName}</div>
-                    </div>
-                    <div className="card-body">
-                      <div className="row row-cols-3">
-                        {
-                          city.weatherElement[0].time.map((time, index) => {
-                            return <div className="col" key={index}>
-                              <div className="h4 my-2">
-                                {new Date(time.startTime).toLocaleDateString(undefined, {day: 'numeric'})}
-                              </div>
-                              {new Date(time.startTime).toLocaleString(undefined, {hour: 'numeric', minute: 'numeric'})} <br/>
-                              ~ <br/>
-                              {new Date(time.endTime).toLocaleString(undefined, {hour: 'numeric', minute: 'numeric'})}
-                              <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName} />
-                              <div className="mt-2">{time.parameter.parameterName}</div>
-                              <div className="mt-2">
-                                <i className="bi bi-umbrella-fill"></i>
-                                {city.weatherElement[4].time[index].parameter.parameterName}%
-                              </div>
-                            </div>
-                          })
-                        }
-                      </div>
-                    </div>
-                  </div>
+                  {/* city.weatherElement[0] 天氣概況 */}
+                  {/* city.weatherElement[1] 最高氣溫 */}
+                  {/* Pop city.weatherElement[4] 降雨率 */}
+                  <Card
+                    title={city.locationName}
+                    wx={city.weatherElement[0]}
+                    pop={city.weatherElement[4]}
+                  />
                 </div>
               })
             }
