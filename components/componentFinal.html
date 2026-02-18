@@ -20,7 +20,32 @@
     const App = () => {
       return (
         <>
-            <h2 className="my-3">三十六小時天氣預報</h2>
+          <h2 className="my-3">三十六小時天氣預報</h2>
+          <div className="row row-cols-2 g-4">
+            <div className="col">
+              <div className="card text-center">
+                <div className="card-header">
+                  <div className="h4 my-0">台北市</div>
+                </div>
+                <div className="card-body">
+                  <div className="row row-cols-3">
+                    <div className="col">
+                      <div className="h4 my-2">23日
+                      </div>
+                      下午6:00 <br/>
+                      ~ <br/>
+                      上午 6:00
+                      <img src="./weatherIcon/多雲時陰有雨.svg"  />
+                      <div className="mt-2">多雲時陰有雨</div>
+                      <div className="mt-2"><i className="bi bi-umbrella-fill"></i> 10%</div>
+                      </div>
+                    <div className="col"></div>
+                    <div className="col"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       );
     };
