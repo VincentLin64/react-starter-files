@@ -24,6 +24,7 @@
 // 更正確的說法，Promise 是為了解決傳統非同步語法難以建構及管理的問題，如有興趣可搜尋 "callback hell js"
 
 // #2 Promise
+// Promise 失敗或成功只會則一執行
 const promiseSetTimeout = (status) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -32,18 +33,42 @@ const promiseSetTimeout = (status) => {
       } else {
         reject('promiseSetTimeout 失敗')
       }
-    }, 0);
+    }, 1000);
   })
 }
 
 // #2-1 基礎運用
-
+// console.log(1);
+// // 等待 Promise的結果
+// promiseSetTimeout(true)
+//   .then((response) => {
+//     console.log(response);
+//     console.log(2);
+//   })
+//   .catch(console.error);
 
 // #2-2 串接
-
+// console.log(1);
+// promiseSetTimeout(true)
+//   .then((response) => {
+//     console.log(response);
+//     console.log(2);
+//     return promiseSetTimeout(true);
+//   })
+//   .then((response) => {
+//     console.log(response);
+//     console.log(3);
+//   })
 
 // #2-3 失敗捕捉
-
+console.log(1);
+promiseSetTimeout(false)
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // #3 實戰取得遠端資料
 // #3-1
