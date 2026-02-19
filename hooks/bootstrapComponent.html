@@ -4,13 +4,59 @@
 <!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">Bootstrap 元件與 React</h1><small>檔名：<code>bootstrapComponent.html</code></small></div>
 <!-- 🔥🔥練習開始🔥🔥 -->
 <!-- 原生 Bootstrap  -->
+  <!-- Button trigger modal -->
+<!--  data-bs-toggle="modal" data-bs-target="#exampleModal"-->
+  <button type="button" class="btn btn-primary" id="btnModal">
+    Launch demo modal
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <script>
   // ## Modal
   // // #1 生成實體
+  const myModal = new bootstrap.Modal('#exampleModal');
 
   // // #2 套用實體方法
-
+  // myModal.show();
+  // myModal.hide();
+  // setTimeout(() => {
+  //   myModal.show();
+  //   setTimeout(() => {
+  //     myModal.hide();
+  //   }, 1000)
+  // }, 1000)
   // #3 套用監聽
+  const btnModalEl = document.getElementById('btnModal');
+  btnModalEl.addEventListener('click', () => {
+    myModal.show();
+  })
+  const myModalEl = document.getElementById('exampleModal')
+  myModalEl.addEventListener('hidden.bs.modal', event => {
+    console.log('Modal 已關閉');
+  })
+
+  myModalEl.addEventListener('shown.bs.modal', event => {
+    console.log('Modal 已打開');
+  })
+
+
 </script>
 <!--  -->
 <div id="root"></div>
