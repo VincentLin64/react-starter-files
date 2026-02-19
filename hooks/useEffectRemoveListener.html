@@ -28,36 +28,57 @@ const SearchBox = ({onSearchHandler, filterString}) => {
   </div>
 }
 
-let currentPage = 1;
 const App = () => {
   const [filterString, setFilterString] = useState('animal');
   const [jsonData, setJsonData] = useState([]);
+  const currentPage = useRef(1);
+  const isLoading = useRef(false);
   const onSearchHandler = (e) => {
     if (e.key === 'Enter') {
       setFilterString(e.target.value);
-      console.log(e.target.value);
+      // console.log(e.target.value);
     }
   }
 
   // #1 搜尋調整成 keyPress (Enter)
   // #2 getPhoto 取得特定頁數
   // #3 加入滾動事件，滾動到列表下方時，取得一筆新的
+  // #4 修正過度觸發的問題 -> 加入讀取
+
+  const getPhoto = async (page = 1) => {
+    try {
+      isLoading.current = true;
+      const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}&page=${page}`);
+      setJsonData((preData) => {
+        return [...preData, ...result.data.results]
+      });
+      setTimeout(() => isLoading.current = false, 1000);
+      // return result.data.results;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const listRef = useRef(null);
   useEffect(() => {
     (async () => {
-      try {
-        // 搜尋特定需要加入 query
-        const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}`);
-        console.log(result);
-        setJsonData(result.data.results);
-      } catch (error) {
-        console.log(error);
-      }
+      await getPhoto(currentPage.current);
+
+      window.addEventListener('scroll', () => {
+        const height = (listRef.current.offsetHeight + listRef.current.scrollTop) - window.innerHeight;
+
+        if (!isLoading.current && (window.scrollY > height)) {
+          currentPage.current++;
+          getPhoto(currentPage.current);
+        }
+      })
+
     })();
   }, [filterString])
 
   return (<div>
     <SearchBox onSearchHandler={onSearchHandler} filterString={filterString} />
-    <div className='row row-cols-2 g-3'>
+    <div className='row row-cols-2 g-3' ref={listRef}>
       { jsonData.map((item) =>
         <div className="col" key={item.id}>
           <Card item={item} />
