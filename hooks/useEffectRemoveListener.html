@@ -44,14 +44,24 @@ const App = () => {
   // #2 getPhoto 取得特定頁數
   // #3 加入滾動事件，滾動到列表下方時，取得一筆新的
   // #4 修正過度觸發的問題 -> 加入讀取
+  // 取得的新資料在第二頁
+  // 新取得的API還是animal
 
-  const getPhoto = async (page = 1) => {
+  // #5 輸入文字，資料狀態呈現要正確
+  // #6 確保監聽事件是正常的
+
+  const getPhoto = async (page = 1, isNew = true) => {
     try {
       isLoading.current = true;
       const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}&page=${page}`);
       setJsonData((preData) => {
-        return [...preData, ...result.data.results]
+        console.log('更新資料觸發');
+        if (isNew) {
+          return [...result.data.results];
+        }
+        return [...preData, ...result.data.results];
       });
+      currentPage.current = page;
       setTimeout(() => isLoading.current = false, 1000);
       // return result.data.results;
     } catch (error) {
@@ -61,19 +71,19 @@ const App = () => {
 
   const listRef = useRef(null);
   useEffect(() => {
-    (async () => {
-      await getPhoto(currentPage.current);
+    getPhoto(1, true);
 
-      window.addEventListener('scroll', () => {
-        const height = (listRef.current.offsetHeight + listRef.current.scrollTop) - window.innerHeight;
+    const scrollEvent = () => {
+      const height = (listRef.current.offsetHeight + listRef.current.scrollTop) - window.innerHeight;
 
-        if (!isLoading.current && (window.scrollY > height)) {
-          currentPage.current++;
-          getPhoto(currentPage.current);
-        }
-      })
+      if (!isLoading.current && (window.scrollY > height)) {
+        currentPage.current++;
+        getPhoto(currentPage.current, false);
+      }
+    }
 
-    })();
+    window.addEventListener('scroll', scrollEvent)
+    return () => window.removeEventListener('scroll', scrollEvent);
   }, [filterString])
 
   return (<div>
