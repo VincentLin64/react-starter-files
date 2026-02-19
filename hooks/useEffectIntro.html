@@ -9,7 +9,7 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 const api = 'https://api.unsplash.com/search/photos/';
-const accessKey = 'GAvxZ9VesndxTx_9NftqgOtZffnTB0YhfGiWGDJA-bs';
+const accessKey = '';
 
 const SearchBox = ({onSearchHandler, filterString}) => {
   return <div>
@@ -31,6 +31,16 @@ const App = () => {
   // #1 建立非同步方法時，會因為渲染的關係不斷重複觸發
 
   // #2 useEffect
+  useEffect(() => {
+    const getPhotos = async (filterString) => {
+      const response = await axios.get(api, {
+        params: {query: filterString},
+        headers: {'Authorization': `Client-ID ${accessKey}`}
+      })
+      console.log(response.data);
+    }
+    getPhotos(filterString);
+  }, []);
 
   return (<div>
     {console.log(2)}
