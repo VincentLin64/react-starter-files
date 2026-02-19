@@ -12,13 +12,29 @@ const App = () => {
   // #6 關於前一個狀態
   const [arr, setArr] = useState([]);
 
+  function mergeArrData () {
+    console.log(arr);
+    const newArr = [{num:1},{num:2},{num:3}];
+    // setArr([...arr,...newArr]);
+    setArr((pre) => {
+      console.log('前一個狀態',pre);
+      return [...pre,...newArr];
+    });
+  }
+
+  useEffect(() => {
+    setInterval(() => {
+      mergeArrData();
+    }, 1000)
+  }, [])
+
 
   return (<div>
 
     <ul>
       {arr.map((item, key) => <li key={key}>{ item.num }</li>)}
     </ul>
-    <button type="button" >新增一組陣列及合併</button>
+    <button type="button" onClick={mergeArrData}>新增一組陣列及合併</button>
   </div>)
 }
 
